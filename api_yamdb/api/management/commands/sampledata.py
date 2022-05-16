@@ -6,7 +6,6 @@ from django.conf import settings
 from django.core.management.base import BaseCommand, CommandError
 from django.db import transaction
 from django.db.models import Model
-
 from reviews.models import Category, Comment, Genre, Review, Title, User
 
 CSV_DIR = os.path.join(settings.BASE_DIR, 'static/data/')
@@ -38,7 +37,7 @@ class Command(BaseCommand):
 
     @transaction.atomic
     def handle(self, *args, **options):
-        MODELS = {
+        my_models = {
             User: 'users',
             Category: 'category',
             Genre: 'genre',
@@ -48,7 +47,7 @@ class Command(BaseCommand):
             Title.genre.through: 'genre_title'
         }
         try:
-            for model, filebase in MODELS.items():
+            for model, filebase in my_models.items():
                 self.load_csv(model, f'{filebase}.csv')
         except Exception as error:
             raise CommandError(f'что-то пошло не так. {error}')
