@@ -13,7 +13,7 @@ DEBUG = False
 ALLOWED_HOSTS = [
     '51.250.108.40',
     'vitalca.hopto.org',
-    ]
+]
 
 AUTH_USER_MODEL = 'reviews.YamdbUser'
 
