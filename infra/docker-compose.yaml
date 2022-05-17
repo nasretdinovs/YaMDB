@@ -15,7 +15,7 @@ services:
     depends_on:
       - db
     env_file:
-      - ../infra/.env
+      - .env
   nginx:
     image: nginx:1.21.3-alpine
     ports:
