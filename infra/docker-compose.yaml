@@ -7,7 +7,7 @@ services:
     env_file:
       - ./.env
   web:
-    image: nasretdinov/api_yamdb
+    build: ../api_yamdb/
     restart: always
     volumes:
       - static_value:/app/static/
@@ -15,7 +15,7 @@ services:
     depends_on:
       - db
     env_file:
-      - .env
+      - ../infra/.env
   nginx:
     image: nginx:1.21.3-alpine
     ports:

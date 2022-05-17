@@ -11,6 +11,9 @@ SECRET_KEY = 'p&l%385148kslhtyn^##a1)ilz@4zqj=rq&agdol^##zgl9(vs'
 DEBUG = False
 
 ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    '[::1]',
     '51.250.108.40',
     'vitalca.hopto.org',
 ]
