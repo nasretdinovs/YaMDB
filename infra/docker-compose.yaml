@@ -7,7 +7,7 @@ services:
     env_file:
       - ./.env
   web:
-    image: nasretdinov/api_yamdb
+    image: nasretdinov/api_yamdb:latest
     restart: always
     volumes:
       - static_value:/app/static/
