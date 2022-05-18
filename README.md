@@ -4,22 +4,13 @@
 Обзоры и мнения о медиа.
 
 ## Наполнение env-файла
-
- - DB_ENGINE - указываем систему управления базами данных
- - DB_NAME - имя базы данных
- - POSTGRES_USER - логин для подключения к базе данных
- - POSTGRES_PASSWORD - пароль для подключения к БД
- - DB_HOST - название сервиса (контейнера)
- - DB_PORT - порт для подключения к БД
-
-Пример:
 ```
-DB_ENGINE=django.db.backends.postgresql
-DB_NAME=postgres
-POSTGRES_USER=admin
-POSTGRES_PASSWORD=Qwerty12345
-DB_HOST=db
-DB_PORT=5432
+DB_ENGINE=django.db.backends.postgresql # указываем систему управления базами данных
+DB_NAME=postgres # имя базы данных
+POSTGRES_USER=admin # логин для подключения к базе данных
+POSTGRES_PASSWORD=Qwerty12345 # пароль для подключения к БД
+DB_HOST=db # название сервиса (контейнера)
+DB_PORT=5432 # порт для подключения к БД
 ```
 
 # Установка
