@@ -3,22 +3,22 @@
 
 Обзоры и мнения о медиа.
 
-## Secrets for Actions
+## Secrets for Actions:
 
-DB_ENGINE — указываем систему управления базами данных
-DB_HOST — название сервиса (контейнера)
-DB_NAME — имя базы данных
-DB_PORT — порт для подключения к БД
-DOCKER_PASSWORD — пароль от hub.docker.com
-DOCKER_USERNAME — логин от hub.docker.com
-HOST — публичный IP-адрес сервера
-PASSPHRASE — для подключения к серверу по SSH
-POSTGRES_PASSWORD — пароль для подключения к БД
-POSTGRES_USER — логин для подключения к базе данных
-SSH_KEY — приватный ключ с компьютера, имеющего доступ к боевому серверу [cat ~/.ssh/id_rsa]
-TELEGRAM_TO — ID своего телеграм-аккаунта
-TELEGRAM_TOKEN — токен бота
-USER — имя пользователя для подключения к серверу
+- DB_ENGINE — указываем систему управления базами данных
+- DB_HOST — название сервиса (контейнера)
+- DB_NAME — имя базы данных
+- DB_PORT — порт для подключения к БД
+- DOCKER_PASSWORD — пароль от hub.docker.com
+- DOCKER_USERNAME — логин от hub.docker.com
+- HOST — публичный IP-адрес сервера
+- PASSPHRASE — для подключения к серверу по SSH
+- POSTGRES_PASSWORD — пароль для подключения к БД
+- POSTGRES_USER — логин для подключения к базе данных
+- SSH_KEY — приватный ключ с компьютера, имеющего доступ к боевому серверу [cat ~/.ssh/id_rsa]
+- TELEGRAM_TO — ID своего телеграм-аккаунта
+- TELEGRAM_TOKEN — токен бота
+- USER — имя пользователя для подключения к серверу
 
 # Установка
 Выполнить миграции, создать суперпользователя и собрать статику.
@@ -28,17 +28,6 @@ sudo docker compose exec web python manage.py migrate
 sudo docker compose exec web python manage.py createsuperuser
 sudo docker compose exec web python manage.py collectstatic --no-input
 ```
-
-## Запуск и остановка
-Запуск производится командой:
-```
-sudo docker compose start
-```
-Остановка производится командой:
-```
-sudo docker compose stop
-```
-После запуска локального сервера документация API доступна по адресу [http://127.0.0.1/redoc/](http://127.0.0.1/redoc/)
 
 # Работа с базой данных
 Команда для копирования файла на сервер по SSH:
@@ -64,7 +53,6 @@ sudo docker compose exec web python manage.py loaddata fixtures.json
 ```
 sudo docker compose exec web python manage.py loaddata fixtures.json
 ```
-
 
 ## Технологии
 
