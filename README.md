@@ -69,10 +69,5 @@ sudo docker compose exec web python manage.py loaddata fixtures.json
 - [Анастасия Дементьева](https://github.com/Nastasia153)
 - [Виталий Насретдинов](https://github.com/nasretdinovs)
 
-## Адрес сервера для проверки:
-1) http://51.250.108.40/api/v1/
-2) http://51.250.108.40/admin
-3) http://51.250.108.40/redoc
-
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
