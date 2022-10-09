@@ -7,6 +7,7 @@ from .mixins import ValidateUsernameMixin
 
 
 class CurrentTitleDefault:
+    """Сериализатор для модели произведения."""
     requires_context = True
 
     def __call__(self, serializer_field):
@@ -17,6 +18,7 @@ class CurrentTitleDefault:
 
 
 class ReviewSerializer(serializers.ModelSerializer):
+    """Сериализатор для рецензий."""
     author = serializers.SlugRelatedField(
         slug_field='username',
         read_only=True,
@@ -38,6 +40,7 @@ class ReviewSerializer(serializers.ModelSerializer):
 
 
 class CommentSerializer(serializers.ModelSerializer):
+    """Сериализатор для комментариев."""
     author = serializers.SlugRelatedField(
         slug_field='username',
         read_only=True,
@@ -50,24 +53,27 @@ class CommentSerializer(serializers.ModelSerializer):
 
 
 class RubricSerializer(serializers.ModelSerializer):
-    """Базовый сериализатор для сущностей с именем и кодом"""
+    """Базовый сериализатор для сущностей с именем и кодом."""
     class Meta:
         fields = ('name', 'slug')
 
 
 class CategorySerializer(RubricSerializer):
+    """Сериализатор для категорий."""
 
     class Meta(RubricSerializer.Meta):
         model = Category
 
 
 class GenreSerializer(RubricSerializer):
+    """Сериализатор для жанров."""
 
     class Meta(RubricSerializer.Meta):
         model = Genre
 
 
 class WriteTitleSerializer(serializers.ModelSerializer):
+    """Сериализатор для сохранения произведения."""
     year = serializers.IntegerField(
         validators=[validator_year()],
     )
@@ -90,6 +96,7 @@ class WriteTitleSerializer(serializers.ModelSerializer):
 
 
 class ReadTitleSerializer(serializers.ModelSerializer):
+    """Сериализатор для вывода произведения."""
     rating = serializers.IntegerField(read_only=True)
     genre = GenreSerializer(read_only=True, many=True)
     category = CategorySerializer(read_only=True)
@@ -103,6 +110,7 @@ class ReadTitleSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(ValidateUsernameMixin, serializers.ModelSerializer):
+    """Сериализатор для модели User."""
     class Meta:
         model = User
         fields = (
@@ -111,11 +119,13 @@ class UserSerializer(ValidateUsernameMixin, serializers.ModelSerializer):
 
 
 class CurrentUserSerializer(UserSerializer):
+    """Дополнительный сериализатор для User с ограничением."""
     class Meta(UserSerializer.Meta):
         read_only_fields = ('role',)
 
 
 class SignUpSerializer(ValidateUsernameMixin, serializers.Serializer):
+    """Сериализатор для регистрации пользователя."""
     email = serializers.EmailField(max_length=254)
     username = serializers.CharField(
         max_length=150, validators=(username_validator(),)
@@ -123,6 +133,7 @@ class SignUpSerializer(ValidateUsernameMixin, serializers.Serializer):
 
 
 class TokenRequestSerializer(serializers.Serializer):
+    """Сериализатор для запроса токена."""
 
     username = serializers.CharField()
     confirmation_code = serializers.CharField()

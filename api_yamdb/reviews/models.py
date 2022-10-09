@@ -67,6 +67,7 @@ User = get_user_model()
 
 
 class RubricBase(PrintFieldMixin, models.Model):
+    """Общая модель для наследования."""
     name = models.CharField(
         verbose_name='название',
         max_length=256
@@ -83,6 +84,7 @@ class RubricBase(PrintFieldMixin, models.Model):
 
 
 class Category(RubricBase):
+    """Модель для категорий."""
 
     class Meta(RubricBase.Meta):
         default_related_name = 'categories'
@@ -91,6 +93,7 @@ class Category(RubricBase):
 
 
 class Genre(RubricBase):
+    """Модель для жанров."""
 
     class Meta(RubricBase.Meta):
         default_related_name = 'genres'
@@ -99,6 +102,7 @@ class Genre(RubricBase):
 
 
 class Title(PrintFieldMixin, models.Model):
+    """Модель для произведений."""
     name = models.TextField(
         verbose_name='название'
     )
@@ -132,6 +136,7 @@ class Title(PrintFieldMixin, models.Model):
 
 
 class BaseInfo(PrintFieldMixin, models.Model):
+    """Общая модель для наследования."""
     text = models.TextField(verbose_name='текст')
     author = models.ForeignKey(
         User,
@@ -154,6 +159,7 @@ class BaseInfo(PrintFieldMixin, models.Model):
 
 
 class Review(BaseInfo):
+    """Модель для рецензии."""
     title = models.ForeignKey(
         Title,
         on_delete=models.CASCADE,
@@ -179,6 +185,7 @@ class Review(BaseInfo):
 
 
 class Comment(BaseInfo):
+    """Модель для комментариев."""
     review = models.ForeignKey(
         Review,
         on_delete=models.CASCADE,

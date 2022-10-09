@@ -31,6 +31,7 @@ class RubricBaseViewSet(
     mixins.DestroyModelMixin,
     viewsets.GenericViewSet
 ):
+    """Базовый вьюсет для категорий и жанров."""
     permission_classes = (IsAdminUserOrReadOnly,)
     filter_backends = (filters.SearchFilter,)
     search_fields = ('name',)
@@ -38,18 +39,22 @@ class RubricBaseViewSet(
 
 
 class ReviewViewSet(viewsets.ModelViewSet):
+    """Создание и изменение рецензий."""
     serializer_class = ReviewSerializer
     permission_classes = (
         IsAuthenticatedOrReadOnly, IsAdminOrModeratorOrAuthorOrReadOnly
     )
 
     def get_title(self):
+        """Вывод произведения."""
         return get_object_or_404(Title, id=self.kwargs.get('title_id'))
 
     def get_queryset(self):
+        """Вывод всех рецензий к определенному произведению."""
         return self.get_title().reviews.all()
 
     def perform_create(self, serializer):
+        """Создание рецензии."""
         serializer.save(
             author=self.request.user,
             title=self.get_title()
@@ -57,18 +62,22 @@ class ReviewViewSet(viewsets.ModelViewSet):
 
 
 class CommentViewSet(viewsets.ModelViewSet):
+    """Создание и изменение комментарий."""
     serializer_class = CommentSerializer
     permission_classes = (
         IsAuthenticatedOrReadOnly, IsAdminOrModeratorOrAuthorOrReadOnly
     )
 
     def get_review(self):
+        """Вывод рецензии."""
         return get_object_or_404(Review, id=self.kwargs.get('review_id'))
 
     def get_queryset(self):
+        """Вывод всех комментариев для определенной рецензии."""
         return self.get_review().comments.all()
 
     def perform_create(self, serializer):
+        """Создание комментария."""
         serializer.save(
             author=self.request.user,
             review=self.get_review()
@@ -76,16 +85,19 @@ class CommentViewSet(viewsets.ModelViewSet):
 
 
 class CategoryViewSet(RubricBaseViewSet):
+    """Создание и изменения категории."""
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
 
 
 class GenreViewSet(RubricBaseViewSet):
+    """Создание и изменения жанра."""
     queryset = Genre.objects.all()
     serializer_class = GenreSerializer
 
 
 class TitleViewSet(viewsets.ModelViewSet):
+    """Создание и изменения произведения."""
     queryset = (
         Title.objects.annotate(rating=Round(Avg('reviews__score')))
     )
@@ -96,12 +108,14 @@ class TitleViewSet(viewsets.ModelViewSet):
     filterset_class = TitleFilter
 
     def get_serializer_class(self):
+        """Вызов нужного сериализатора: для записи или для чтения."""
         if self.action in ['create', 'update', 'partial_update']:
             return WriteTitleSerializer
         return ReadTitleSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
+    """Создание или изменение пользователя."""
     queryset = User.objects.all().order_by('-date_joined')
     serializer_class = UserSerializer
     permission_classes = (IsAdminAsDefinedByUserModel,)
@@ -130,7 +144,7 @@ class UserViewSet(viewsets.ModelViewSet):
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def signup(request):
-    """Регистрация пользователя и отправка кода подтверждения"""
+    """Регистрация пользователя и отправка кода подтверждения."""
     serializer = SignUpSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
     try:
@@ -151,7 +165,7 @@ def signup(request):
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def token(request):
-    """Проверка кода подтверждения"""
+    """Проверка кода подтверждения."""
     serializer = TokenRequestSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
     user = get_object_or_404(

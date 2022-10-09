@@ -8,6 +8,7 @@ from .models import Category, Comment, Genre, Review, Title, YamdbUser
 
 @admin.register(YamdbUser)
 class YamdbUserAdmin(UserAdmin):
+    """Админка пользователей."""
     list_display = (
         'username', 'email', 'first_name', 'last_name',
         'is_staff', 'role'
@@ -29,6 +30,7 @@ class YamdbUserAdmin(UserAdmin):
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
+    """Админка категорий."""
     list_display = (
         'id',
         'name',
@@ -38,6 +40,7 @@ class CategoryAdmin(admin.ModelAdmin):
 
 
 class GenreInline(admin.TabularInline):
+    """Связь Произведение-Жанр."""
     model = Title.genre.through
     verbose_name = 'связь произведение-жанр'
     verbose_name_plural = 'связи произведение-жанр'
@@ -45,10 +48,12 @@ class GenreInline(admin.TabularInline):
 
 @admin.register(Genre)
 class GenreAdmin(admin.ModelAdmin):
+    """Админка жанров."""
     inlines = [GenreInline, ]
 
 
 class TitleAdminForm(forms.ModelForm):
+    """Надстройка для админки произведений."""
     class Meta:
         model = Title
         widgets = {
@@ -59,6 +64,7 @@ class TitleAdminForm(forms.ModelForm):
 
 @admin.register(Title)
 class TitleAdmin(admin.ModelAdmin):
+    """Админка произведений."""
     form = TitleAdminForm
     list_display = (
         'id',
@@ -78,6 +84,7 @@ class TitleAdmin(admin.ModelAdmin):
 
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):
+    """Админка рецензий."""
     list_display = (
         'id',
         'title',
@@ -91,6 +98,7 @@ class ReviewAdmin(admin.ModelAdmin):
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
+    """Админка комментариев."""
     list_display = (
         'id',
         'review',
